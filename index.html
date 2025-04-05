@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INTEL Ai</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        h1 {
+            font-size: 65px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Mngao wa kwanza */
+            color: white;
+        }
+        h1:hover {
+            color: #00aaff; /* Rangi itabadilika wakati wa hover */
+            text-shadow: 4px 4px 10px rgba(0, 170, 255, 0.8); /* Mngao unapohovewa */
+        }
+        .intel {
+            color: #00aaff; /* Rangi ya INTEL */
+        }
+        .ai {
+            color: white; /* Rangi ya Ai */
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .ai:hover {
+            color: #00aaff; /* Rangi ya Ai itabadilika kuwa blue wakati wa hover */
+            text-shadow: 4px 4px 15px rgba(0, 170, 255, 0.8); /* Mngao wa glow kwenye Ai wakati wa hover */
+        }
+        .tm {
+            font-size: 0.4em;
+            vertical-align: super;
+        }
+        .subtext {
+            font-size: 22px;
+            color: white;
+            font-weight: bold;
+            margin-top: 15px;
+            font-style: italic;
+            transition: all 0.3s ease;
+        }
+        .subtext:hover {
+            color: #00aaff;
+        }
+        .search-box {
+            margin-top: 25px;
+            width: 500px; /* Upana umeongezwa */
+            height: 45px; /* Urefu umepunguzwa */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: bounce 0.5s ease infinite;
+        }
+        .search-box i {
+            font-size: 24px;
+            color: white;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .search-box input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 18px;
+            color: white;
+            padding: 8px;
+        }
+        .ask-button {
+            margin-top: 15px;
+            width: 200px;
+            height: 50px;
+            background: #00aaff;
+            color: white;
+            font-size: 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: moveButton 2s infinite;
+        }
+        .ask-button:hover {
+            background: white;
+            color: #00aaff;
+        }
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 80%;
+            height: 80%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .popup.show {
+            display: flex;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .popup iframe {
+            width: 100%;
+            height: 90%;
+            border: none;
+            border-radius: 10px;
+        }
+        .close-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #00aaff;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .powered-by {
+            font-size: 18px;
+            color: white;
+            margin-top: 20px;
+        }
+        .powered-by:hover {
+            color: #00aaff;
+        }
+        .bing-text {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00aaff;
+            text-shadow: 0px 0px 10px rgba(0, 170, 255, 0.8);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+        .bing-text:hover {
+            color: white;
+            text-shadow: 0px 0px 15px rgba(0, 170, 255, 0.8);
+        }
+        /* Circular Frame for content with spinning glow effect */
+        .content-frame {
+            border: 5px solid #00aaff;
+            border-radius: 50%;
+            padding: 30px;
+            transition: all 0.3s ease;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: spin 3s linear infinite, glow 1.5s ease-in-out infinite;
+        }
+        .content-frame:hover {
+            transform: scale(1.1); /* Zoom effect on hover */
+        }
+        
+        /* Spinning Animation for the circular frame */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Glowing Animation for the circular frame */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 170, 255, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(0, 170, 255, 1.0);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(0, 170, 255, 0.7);
+            }
+        }
+
+        /* Bouncing Animation for Search Box */
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* Animation for Ask button moving left and right */
+        @keyframes moveButton {
+            0% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(15px);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            75% {
+                transform: translateX(-15px);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content-frame">
+        <h1><span class="intel">INTEL</span> <span class="ai">Ai</span><span class="tm">™</span></h1>
+    </div>
+    <p class="subtext">Ask Anything</p>
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search anything...">
+    </div>
+    <button class="ask-button" onclick="searchBing()">Ask</button>
+    <div class="popup" id="popupBox">
+        <iframe id="searchResults"></iframe>
+        <button class="close-btn" onclick="closePopup()">Close</button>
+    </div>
+    <div class="powered-by">
+        Powered by <span class="bing-text">KENGEGA</span>
+    </div>
+
+    <script>
+        function searchBing() {
+            var query = document.getElementById("searchInput").value.trim();
+            if (query === "") {
+                return;
+            }
+            var popup = document.getElementById("popupBox");
+            var iframe = document.getElementById("searchResults");
+            iframe.src = "https://www.bing.com/search?q=" + encodeURIComponent(query);
+            popup.classList.add("show");
+        }
+        function closePopup() {
+            document.getElementById("popupBox").classList.remove("show");
+        }
+    </script>
+</body>
+</html>
